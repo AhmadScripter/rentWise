@@ -1,0 +1,48 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-sm">
+    <h4 class="text-center mb-3">Complete Your Profile</h4>
+
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border text-primary"></div>
+      <p>Loading profile...</p>
+    </div>
+
+    <div *ngIf="message" class="alert alert-success">{{ message }}</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+    <form *ngIf="!isLoading" [formGroup]="profileForm" (ngSubmit)="completeProfile()">
+      <div class="mb-3">
+        <label for="cnic" class="form-label">CNIC</label>
+        <input id="cnic" type="text" class="form-control" placeholder="1234567890123" formControlName="cnic" required />
+      </div>
+      
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input id="phone" type="text" class="form-control" placeholder="03123456789" formControlName="phone" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="gender" class="form-label">Gender</label>
+        <select id="gender" class="form-control" formControlName="gender" required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input id="address" type="text" class="form-control" placeholder="Enter your address" formControlName="address"
+          required />
+      </div>
+
+      <div class="mb-3">
+        <label for="postalCode" class="form-label">Postal Code</label>
+        <input id="postalCode" type="text" class="form-control" placeholder="36350" formControlName="postalCode"
+          required />
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Save Profile</button>
+    </form>
+  </div>
+</div>

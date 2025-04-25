@@ -1,0 +1,55 @@
+.privacy {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 40px;
+    background: #fdfdfd;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .privacy h1 {
+    font-size: 2.4rem;
+    color: #0077cc;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .privacy p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  .privacy ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .privacy ul li {
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  
+  .privacy ul li::before {
+    content: "🔒";
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  
+  .privacy a {
+    color: #0077cc;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  
+  .privacy a:hover {
+    color: #004d80;
+  }
+  

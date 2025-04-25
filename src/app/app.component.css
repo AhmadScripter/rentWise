@@ -1,0 +1,24 @@
+app-navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  background: #fff;
+}
+
+app-footer {
+  width: 100%;
+  margin: 0;
+  position: relative;
+}
+
+.d-flex {
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 576px) {
+  app-navbar {
+    font-size: 12px;
+  }
+}

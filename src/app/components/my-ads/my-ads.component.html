@@ -1,0 +1,65 @@
+<div class="page-container mt-5">
+  <!-- Left Side: Listed Ads -->
+  <div class="ads-container">
+    <h2>My Ads</h2>
+
+    <div *ngIf="ads.length; else noAds">
+      <div class="card mb-3" *ngFor="let ad of ads">
+        <div class="card-body">
+          <h5 class="card-title">{{ ad.title }}</h5>
+          <p class="card-text"><strong>Category:</strong> {{ ad.category }}</p>
+          <p class="card-text"><strong>Description:</strong> {{ ad.description }}</p>
+          <p class="card-text"><strong>Price:</strong> {{ ad.price }}</p>
+          <p class="card-text"><strong>Uploaded On:</strong> {{ getTimeAgo(ad.uploadTime) }}</p>
+          <img *ngIf="ad.img" [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" alt="Ad Image" width="100">
+          <button class="btn btn-danger mt-2" (click)="deleteAd(ad._id)">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Ads Message -->
+    <ng-template #noAds>
+      <p class="text-center">No ads found. Start by creating one below!</p>
+    </ng-template>
+  </div>
+
+  <!-- Right Side: Create New Ad -->
+  <div class="form-container">
+    <h4>Create a New Ad</h4>
+    <form [formGroup]="adForm" (ngSubmit)="createAd()">
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" formControlName="title" required />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-control" formControlName="category" required>
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" formControlName="description" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Price /day</label>
+        <input type="number" class="form-control" formControlName="price" required />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Upload Image</label>
+        <input type="file" class="form-control" formControlName="img" (change)="onFileSelect($event)" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Location</label>
+        <input type="text" class="form-control" formControlName="location" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="adForm.invalid">Post Ad</button>
+    </form>
+  </div>
+</div>

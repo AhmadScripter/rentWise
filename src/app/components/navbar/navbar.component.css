@@ -1,0 +1,48 @@
+
+li{
+    cursor: pointer;
+}
+li i.fa-circle-user{
+    font-size: 20px;
+}
+.rent-btn {
+    position: relative;
+    background: white;
+    padding: 6px 20px !important;
+    margin: 0 10px;
+    font-size: 14px;
+    color: black;
+    border: none; 
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.rent-btn::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: conic-gradient(
+        #23E5DB 0deg 120deg, 
+        #FFCE32 120deg 240deg,
+        #6897FF 240deg 360deg 
+    );
+    border-radius: 44px;
+    z-index: -1;
+}
+
+.rent-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    border-radius: 40px;
+    z-index: -1;
+}

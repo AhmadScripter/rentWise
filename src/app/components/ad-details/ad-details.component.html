@@ -1,0 +1,18 @@
+<div class="container m-4" *ngIf="ad">
+  <div class="row">
+    <div class="col-md-6">
+      <img [src]="'http://localhost:3000' + ad.img" crossorigin="anonymous" class="img-fluid rounded"
+        alt="{{ ad.title }}">
+    </div>
+    <div class="col-md-6">
+      <h2>{{ ad.title }}</h2>
+      <h4 class="text-success"><strong>{{ ad.price }}</strong></h4>
+      <p><strong>Category:</strong> {{ ad.category }}</p>
+      <p><strong>Location:</strong> {{ ad.location }}</p>
+      <p><strong>Uploaded:</strong> {{ ad.uploadTime | date: 'dd-MM-YYYY, h:mm a' }}</p>
+      <p><strong>Description:</strong> {{ ad.description }}</p>
+      <p><strong>Owner Name:</strong> {{ ad.ownerName }}</p>
+      <p><strong>Owner Contact:</strong> {{ ad.ownerPhone }}</p>
+    </div>
+  </div>
+</div>

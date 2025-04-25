@@ -1,0 +1,18 @@
+<div class="container mt-5 ">
+    <h3>{{ categoryName }} Ads</h3>
+    <div class="row">
+      <div  *ngFor="let ad of categoryAds">
+        <div class="card col-md-3 item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item" alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price }}</strong></h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="text-muted">
+              <i class="bi bi-geo-alt"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

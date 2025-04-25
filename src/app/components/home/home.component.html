@@ -1,0 +1,288 @@
+<div class="container-fluid mt-5">
+  <!-- Hero Section -->
+  <div class="hero-section text-white p-5 rounded d-flex align-items-center justify-content-center flex-column ">
+    <h1>Find & Rent Items Easily</h1>
+    <p>Browse thousands of rental items near you</p>
+    <div class="search-bar col-md-4 ">
+      <input type="text" class="form-control" [(ngModel)]="searchQuery"
+      placeholder="Search for items by category or title" />
+      <button class="btn btn-primary">Search</button>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="searchQuery && filteredAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Search Results</h4>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-3" *ngFor="let ad of filteredAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price }}</strong></h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Optionally show "No Results" -->
+  <div *ngIf="searchQuery && filteredAds.length === 0" class="text-center text-muted mt-4">
+    No items found for "{{ searchQuery }}"
+  </div>
+
+  <!-- categories  -->
+  <div class="categories my-4">
+    <h3 class="mb-3">All Categories</h3>
+    <div class="categories-container">
+      <div class="card" *ngFor="let category of categories" [routerLink]="['/category', category.name]">
+        <img [src]="category.image" class="category-img" alt="{{ category.name }}" />
+        <p>{{ category.name }}</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container items" *ngIf="electronicAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Electronic Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Electronics']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]"  *ngFor="let ad of electronicAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="furnitureAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Furniture Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Furniture']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of furnitureAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="vehicleAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Vehicle Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Vehicles']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of vehicleAds">
+        <div class="card item" >
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="realEstateAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Real State Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Property']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of realEstateAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="toolAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Tool Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Tools']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of toolAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="mobileAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Mobile Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Mobiles']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of mobileAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="homeApplianceAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Home Appliance Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Home Appliances']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of homeApplianceAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container items" *ngIf="bikeAds.length">
+    <div class="row d-flex align-items-center justify-content-between mb-1">
+      <div class="col-auto">
+        <h4>Bike Ads</h4>
+      </div>
+      <div class="col-auto">
+        <a [routerLink]="['/category', 'Bikes']" class="text-primary">View More <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3" [routerLink]="['/ad', ad._id]" *ngFor="let ad of bikeAds">
+        <div class="card item">
+          <img [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" class="card-img-top item"
+            alt="{{ ad.title }}">
+          <div class="card-body">
+            <h5 class="card-title"><strong>{{ ad.price | currency:'PKR' }}</strong> /day</h5>
+            <p class="card-text">{{ ad.title }}</p>
+            <p class="card-text">{{ ad.category }}</p>
+            <p class="text-muted">
+              <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+            </p>
+            <small class="text-muted time">{{ getTimeAgo(ad.uploadTime) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

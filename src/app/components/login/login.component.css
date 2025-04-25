@@ -1,0 +1,14 @@
+.card {
+  border-radius: 10px;
+}
+
+a {
+  color: #0000F6;
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+input::placeholder {
+  font-style: italic;
+  color: #b4b4b4;
+}

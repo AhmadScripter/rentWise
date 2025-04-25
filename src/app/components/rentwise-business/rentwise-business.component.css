@@ -1,0 +1,154 @@
+.business-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  background-color: #fff;
+}
+
+.header {
+  background: linear-gradient(90deg, #007BFF, #00BFFF);
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo img {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.header nav ul li {
+  margin: 0 20px;
+}
+
+.header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.header nav ul li a:hover {
+  color: #ffc107;
+}
+
+.hero {
+  background: linear-gradient(to right, #e3f2fd, #ffffff);
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: #007BFF;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero .cta-button {
+  background-color: #007BFF;
+  color: white;
+  padding: 12px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.hero .cta-button:hover {
+  background-color: #0056b3;
+}
+
+.how-it-works, .features, .testimonials, .contact {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.how-it-works h2, .features h2, .testimonials h2, .contact h2 {
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.steps, .features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.step, .feature {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  padding: 25px;
+  width: 250px;
+  transition: transform 0.3s;
+}
+
+.step:hover, .feature:hover {
+  transform: translateY(-5px);
+}
+
+.step h3, .feature h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #007BFF;
+}
+
+.step p, .feature p {
+  font-size: 16px;
+  color: #555;
+}
+
+.testimonial {
+  background-color: #ffffff;
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  font-style: italic;
+  color: #444;
+}
+
+.testimonial h4 {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #007BFF;
+}
+
+.contact .cta-button {
+  background-color: #28a745;
+  padding: 12px 28px;
+  font-size: 16px;
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.contact .cta-button:hover {
+  background-color: #218838;
+}

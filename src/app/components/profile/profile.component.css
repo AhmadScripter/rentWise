@@ -1,0 +1,45 @@
+
+.container {
+    max-width: 450px;
+    background: #fff;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+}
+.container h4{
+    font-weight: 600;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+
+input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    display: none;
+}
+
+input::placeholder {
+    font-style: italic;
+    color: #b4b4b4;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    background: #6e93f7;
+    transition: 0.2s ease-in-out;
+}
+
+button:hover {
+    background: #0e4bf1;
+}
