@@ -17,6 +17,9 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact Us</a>
+                    </li>
                     
                     <!-- Show login if user is NOT logged in -->
                     <li class="nav-item" *ngIf="!isLoggedIn">
@@ -25,7 +28,7 @@
 
                     <!-- Show user icon with dropdown when logged in -->
                     <li class="nav-item dropdown" *ngIf="isLoggedIn">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -37,8 +40,8 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item" routerLink="/my-ads">
-                        <a class="nav-link rent-btn" routerLink="/rent" routerLinkActive="active">
+                    <li class="nav-item" routerLink="/my-ads" routerLinkActive="active">
+                        <a class="nav-link rent-btn">
                             <i class="fa-solid fa-plus"></i> Rent
                         </a>
                     </li>

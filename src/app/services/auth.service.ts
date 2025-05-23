@@ -16,7 +16,10 @@ export class AuthService {
 
   // Check if token exists
   private checkToken(): boolean {
-    return !!localStorage.getItem('authToken');
+    if (typeof window !== 'undefined') {
+      return !!localStorage.getItem('authToken');
+    }
+    return false;
   }
 
   // Save token to localStorage

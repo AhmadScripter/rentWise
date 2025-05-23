@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,14 +12,12 @@ import { Router, RouterModule } from '@angular/router';
 export class NavbarComponent implements OnInit{
   isLoggedIn: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    this.checkLoginStatus();
-  }
-
-  checkLoginStatus() {
-    this.isLoggedIn = !!localStorage.getItem('authToken');
+    this.authService.isLoggedIn.subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
   logout() {

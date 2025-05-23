@@ -14,3 +14,12 @@ body {
     font-weight: bold;
     color: blue;
 }
+
+.toast-top-right {
+    top: 12px !important;
+    right: 12px !important;
+    position: fixed !important;
+    z-index: 9999 !important;
+    
+  }
+  

@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login',
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   email = '';
@@ -24,6 +24,7 @@ export class LoginComponent {
         localStorage.setItem('authToken', response.token); 
         
         this.authService.setLoginStatus(true); 
+        // window.location.reload();
         this.router.navigate(['/home']);
       },
       (err) => {

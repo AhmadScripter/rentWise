@@ -1,6 +1,9 @@
 <div class="contact-container">
     <h2>Contact Us</h2>
-    <p>If you have any questions, feedback, or need support — we’re here to help!</p>
+    <p class="text-center">If you have any questions, feedback, or need support — we’re here to help!</p>
+
+    <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
+    <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
 
     <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -21,6 +24,4 @@
         <button (click)="onSubmit()" [disabled]="contactForm.invalid">Send Message</button>
     </form>
 
-    <div class="success" *ngIf="successMsg">{{ successMsg }}</div>
-    <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
 </div>

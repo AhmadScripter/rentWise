@@ -44,4 +44,10 @@ export class ContactComponent implements OnInit{
       console.log('Form is incomplete');
     }
   }
+
+  // setTimeout(() => {
+  //   this.successMsg= '';
+  //   this.errorMsg = '';
+  // }, 4000);
+  
 }
