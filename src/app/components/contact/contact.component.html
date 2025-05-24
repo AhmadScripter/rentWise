@@ -21,7 +21,9 @@
             <textarea id="message" rows="5" formControlName="message" placeholder="Type your message..." required></textarea>
         </div>
 
-        <button (click)="onSubmit()" [disabled]="contactForm.invalid">Send Message</button>
+        <button type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+          </button>
     </form>
 
 </div>

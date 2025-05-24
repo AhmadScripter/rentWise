@@ -26,6 +26,8 @@
   <!-- Right Side: Create New Ad -->
   <div class="form-container">
     <h4>Create a New Ad</h4>
+    <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
+    <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
     <form [formGroup]="adForm" (ngSubmit)="createAd()">
       <div class="mb-3">
         <label class="form-label">Title</label>
@@ -59,7 +61,7 @@
         <input type="text" class="form-control" formControlName="location" required />
       </div>
 
-      <button type="submit" class="btn btn-primary w-100" [disabled]="adForm.invalid">Post Ad</button>
+      <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting">{{ isSubmitting ? 'Posting Ad...' : 'Create Ad' }}</button>
     </form>
   </div>
 </div>

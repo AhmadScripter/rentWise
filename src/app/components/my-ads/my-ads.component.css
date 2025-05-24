@@ -1,6 +1,7 @@
 .page-container {
     display: flex;
     justify-content: space-between;
+    max-width: 99vw !important;
     gap: 20px;
     padding: 40px;
     min-height: 100vh;
@@ -28,7 +29,23 @@
     top: 20px;
     height: fit-content;
 }
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+}
 
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
 h2, h4 {
     text-align: center;
     font-weight: bold;
@@ -161,7 +178,7 @@ select.form-control {
 
 @media (max-width: 992px) {
     .page-container {
-        flex-direction: column;
+        flex-direction: column-reverse;
         padding: 20px;
     }
 

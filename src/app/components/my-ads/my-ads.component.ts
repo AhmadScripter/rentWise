@@ -18,7 +18,9 @@ export class MyAdsComponent implements OnInit{
   categories = ["Electronics", "Tools", "Furniture", "Vehicles", "Property", "Mobiles", "Home Appliances", "Bikes"];
   userId: string | null = localStorage.getItem("userId");
   selectedFile: File | null = null;
+  successMsg = '';
   errorMsg = '';
+  isSubmitting = false;
   loading = false;
 
   constructor(private adService: AdService, private fb: FormBuilder, private router: Router) {
@@ -69,9 +71,18 @@ export class MyAdsComponent implements OnInit{
 
   createAd(): void {
     if (!this.userId) {
-      console.error("User ID not found.");
+      this.errorMsg = "User ID not found. Please login again.";
+      setTimeout(() => this.errorMsg = '', 4000);
       return;
     }
+
+    if (this.adForm.invalid) {
+      this.errorMsg = "Please fill all required fields correctly.";
+      setTimeout(() => this.errorMsg = '', 4000);
+      return;
+    }
+  
+    this.isSubmitting = true;
 
     const formData = new FormData();
     formData.append("title", this.adForm.value.title);
@@ -87,15 +98,24 @@ export class MyAdsComponent implements OnInit{
 
     this.adService.createAd(formData).subscribe({
       next: (res) => {
-        console.log("Ad created:", res);
+        this.successMsg = res.message || "Ad created successfully!";
+        setTimeout(()=>{this.successMsg=''}, 4000);
+        this.errorMsg = '';
         this.fetchAds();
         this.adForm.reset();
         this.selectedFile = null;
+        this.isSubmitting = false;
+
       },
       error: (err) => {
         console.error("Error creating ad:", err);
         this.errorMsg = "Failed to create ad. Please check whether you have completed your profile or not :)";
-        alert(this.errorMsg)
+        this.successMsg = '';
+        this.isSubmitting = false;
+
+        setTimeout(() => {
+          this.errorMsg = '';
+        }, 5000);
       }
     });
   }

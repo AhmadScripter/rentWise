@@ -13,6 +13,7 @@ export class ContactComponent implements OnInit{
   contactForm!: FormGroup;
   successMsg = '';
   errorMsg = '';
+  isSubmitting = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
@@ -25,7 +26,14 @@ export class ContactComponent implements OnInit{
   }
 
   onSubmit() {
-    console.log('Form Data:', this.contactForm.value);
+    if (this.contactForm.invalid) {
+      this.errorMsg = 'Please fill all required fields correctly.';
+      this.successMsg = '';
+      setTimeout(() => this.errorMsg = '', 4000);
+      return;
+    }
+
+    this.isSubmitting = true; 
 
     if (this.contactForm.valid) {
       this.http.post('http://localhost:3000/api/contact', this.contactForm.value).subscribe({
@@ -33,21 +41,34 @@ export class ContactComponent implements OnInit{
           this.successMsg = res.message;
           this.errorMsg = '';
           this.contactForm.reset();
+          this.isSubmitting = false;
+
+          setTimeout(() => {
+            this.successMsg = '';
+            this.errorMsg = '';
+          }, 4000);
         },
         error: (err) => {
           console.error('Error response:', err);
           this.errorMsg = err.error?.error || 'Something went wrong';
           this.successMsg = '';
+          this.isSubmitting = false;
+
+          setTimeout(() => {
+            this.successMsg = '';
+            this.errorMsg = '';
+          }, 4000);
         }
       });
     } else {
       console.log('Form is incomplete');
+
+      this.errorMsg = 'Please fill all required fields correctly.';
+      this.successMsg = '';
+
+      setTimeout(() => {
+        this.errorMsg = '';
+      }, 4000);
     }
   }
-
-  // setTimeout(() => {
-  //   this.successMsg= '';
-  //   this.errorMsg = '';
-  // }, 4000);
-  
 }
