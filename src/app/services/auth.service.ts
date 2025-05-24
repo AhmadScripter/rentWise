@@ -49,6 +49,17 @@ export class AuthService {
     this.setLoginStatus(this.checkToken());
   }
 
+  //get all users
+  getAllUsers() {
+    const token = localStorage.getItem('adminToken');
+    return this.http.get(`${this.baseUrl}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+  
+
   // Register - sends OTP to email
   register(name: string, email: string, password: string, confirmPassword: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/registeration`, { name, email, password, confirmPassword });

@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="sub-container">
+      <h2>Admin Login</h2>
+      <p>Please input your email and password</p>
+  
+      <form (ngSubmit)="loginAdmin()" #loginForm="ngForm">
+        <div class="form-group">
+          <input type="email" name="email" [(ngModel)]="admin.email" required placeholder="Email" />
+        </div>
+  
+        <div class="form-group">
+          <input type="password" name="password" [(ngModel)]="admin.password" required placeholder="Password" />
+        </div>
+  
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  
+        <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+      </form>
+    </div>
+  </div>

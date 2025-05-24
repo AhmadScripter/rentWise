@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { sendEmailOTP, verifyEmailOTP, login, logout, completeProfile, getProfile } = require("../controllers/authController");
+const { sendEmailOTP, verifyEmailOTP, login, logout, completeProfile, getProfile, getAllUsers } = require("../controllers/authController");
 const authMiddleware = require("../middleware/authMiddleware");
+const adminAuthMiddleware = require("../middleware/adminAuth");
 
 // Authentication Routes
+router.get('/', adminAuthMiddleware, getAllUsers);
 router.post("/registeration", sendEmailOTP);
 router.post("/verify-email", verifyEmailOTP);
 router.post("/login", login);

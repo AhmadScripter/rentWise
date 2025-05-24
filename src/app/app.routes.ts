@@ -13,6 +13,11 @@ import { RentwiseBusinessComponent } from './components/rentwise-business/rentwi
 import { HelpComponent } from './components/help/help.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { adminGuard } from './guards/admin.guard';
+import { AllAdsComponent } from './components/admin-dashboard/all-ads/all-ads.component';
+import { AllUsersComponent } from './components/admin-dashboard/all-users/all-users.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,4 +35,15 @@ export const routes: Routes = [
     { path: 'help', component: HelpComponent },
     { path: 'terms', component: TermsComponent },
     { path: 'privacy', component: PrivacyComponent },
+
+    { path: 'admin-login', component: AdminLoginComponent },
+    {
+        path: 'admin-dashboard',
+        component: AdminDashboardComponent,
+        canActivate: [adminGuard],
+        children: [
+            { path: 'ads', component: AllAdsComponent },
+            {path: 'users', component: AllUsersComponent},
+        ]
+    },
 ];

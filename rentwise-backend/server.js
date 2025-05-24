@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+const adminAuthRoutes = require("./routes/adminAuth");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const adRoutes = require("./routes/adRoutes");
@@ -25,6 +26,7 @@ app.use(cors(corsOptions));
 app.use("/uploads", express.static("uploads"));
 
 // Routes
+app.use('/api/auth/adminLogin', adminAuthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/auth/profile", profileRoutes);
 app.use("/api/ads", adRoutes);

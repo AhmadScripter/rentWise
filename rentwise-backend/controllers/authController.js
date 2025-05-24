@@ -5,6 +5,16 @@ require("dotenv").config();
 const { sendEmailOTP : sendOtpToEmail } = require("../utils/sendEmailOTP");
 const otpStore = new Map();
 
+// Get all users
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select('-password'); // exclude passwords
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch users' });
+  }
+};
+
 // Send Email OTP (During Signup)
 const sendEmailOTP = async (req, res) => {
   try {
@@ -122,4 +132,4 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { sendEmailOTP, verifyEmailOTP, completeProfile, login, logout, getProfile };
+module.exports = { getAllUsers, sendEmailOTP, verifyEmailOTP, completeProfile, login, logout, getProfile };
