@@ -16,7 +16,7 @@
           <th>Owner Name</th>
           <th>Owner Phone</th>
           <th>Posted On</th>
-          <!-- <th>Action</th> -->
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -33,9 +33,11 @@
           <td>{{ ad.ownerName }}</td>
           <td>{{ ad.ownerPhone }}</td>
           <td>{{ ad.uploadTime | date: 'short' }}</td>
-          <!-- <td class=" btn-danger" ><button (click)="removeAd(ad._id)" class="btn btn-danger">
-                Remove
-            </button></td> -->
+          <td class=" btn-danger">
+            <button (click)="removeAd(ad._id)" class="btn btn-danger">
+              Remove
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

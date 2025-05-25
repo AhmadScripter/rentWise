@@ -28,18 +28,18 @@ export class AllAdsComponent implements OnInit {
     });
   }
 
-  // removeAd(id: string) {
-  //   const confirmed = confirm('Are you sure you want to remove this Ad?');
-  //   if (!confirmed) return;
+  removeAd(id: string) {
+    const confirmed = confirm('Are you sure you want to remove this Ad?');
+    if (!confirmed) return;
 
-  //   this.adService.deleteAd(id).subscribe({
-  //     next: () => {
-  //       this.ads = this.ads.filter(ad => ad._id !== id);
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to delete ad:', err);
-  //     }
-  //   });
-  // }  
+    this.adService.deleteAd(id).subscribe({
+      next: () => {
+        this.ads = this.ads.filter(ad => ad._id !== id);
+      },
+      error: (err) => {
+        console.error('Failed to delete ad:', err);
+      }
+    });
+  }  
 
 }

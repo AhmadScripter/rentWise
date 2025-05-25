@@ -11,6 +11,8 @@ const UserSchema = new mongoose.Schema(
     gender: { type: String },
     address: { type: String },
     postalCode: { type: String },
+
+    isBlocked: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

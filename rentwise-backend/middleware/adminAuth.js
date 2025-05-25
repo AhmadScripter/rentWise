@@ -12,6 +12,10 @@ const adminAuthMiddleware = (req, res, next) => {
     if (decoded.email !== process.env.ADMIN_EMAIL) {
       return res.status(403).json({ message: 'Access denied' });
     }
+    req.user = {
+      id: 'admin',
+      email: decoded.email
+    };
     next();
   } catch (err) {
     return res.status(400).json({ message: 'Invalid token' });

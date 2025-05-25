@@ -103,4 +103,18 @@ export class AuthService {
     });
   }
 
+  // Block user by ID
+blockUser(userId: string): Observable<any> {
+  const token = localStorage.getItem('adminToken');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.put(`${this.baseUrl}/block/${userId}`, {}, { headers });
+}
+
+// Unblock user by ID
+unblockUser(userId: string): Observable<any> {
+  const token = localStorage.getItem('adminToken');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.put(`${this.baseUrl}/unblock/${userId}`, {}, { headers });
+}
+
 }

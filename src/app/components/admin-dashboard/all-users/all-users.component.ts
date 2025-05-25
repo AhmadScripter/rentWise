@@ -15,6 +15,10 @@ export class AllUsersComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
     this.authService.getAllUsers().subscribe({
       next: (res: any) => {
         this.users = res;
@@ -23,6 +27,26 @@ export class AllUsersComponent implements OnInit {
         console.error('Error fetching users:', err);
         this.errMsg = err.error?.message || 'Failed to load users';
       }
+    });
+  }
+
+  blockUser(user: any) {
+    this.authService.blockUser(user._id).subscribe({
+      next: () => {
+        user.isBlocked = true;  // update user status locally
+        console.log('User blocked successfully');
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  unblockUser(user: any) {
+    this.authService.unblockUser(user._id).subscribe({
+      next: () => {
+        user.isBlocked = false;  // update user status locally
+        console.log('User unblocked successfully');
+      },
+      error: (err) => console.error(err)
     });
   }
 

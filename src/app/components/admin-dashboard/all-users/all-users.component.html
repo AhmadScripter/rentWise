@@ -12,6 +12,7 @@
             <th>Postal Code</th>
             <th>Email Verified</th>
             <th>Created At</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,13 @@
             <td>{{ user.postalCode }}</td>
             <td>{{ user.isEmailVerified ? 'Yes' : 'No' }}</td>
             <td>{{ user.createdAt | date:'medium' }}</td>
+            <td>
+                <button class="btn" 
+                  [ngClass]="user.isBlocked ? 'btn-success' : 'btn-danger'" 
+                  (click)="user.isBlocked ? unblockUser(user) : blockUser(user)">
+                  {{ user.isBlocked ? 'Unblock' : 'Block' }}
+                </button>
+              </td>
         </tr>
     </tbody>
 </table>

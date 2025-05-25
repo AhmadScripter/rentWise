@@ -102,6 +102,10 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not Registered!" });
 
+    if (user.isBlocked) {
+      return res.status(403).json({ message: "Your account is blocked. Contact support." });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid email or password!" });
 
@@ -132,4 +136,30 @@ const getProfile = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, sendEmailOTP, verifyEmailOTP, completeProfile, login, logout, getProfile };
+// Block a user
+const blockUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
+    if (!user) return res.status(404).json({ message: "User not found!" });
+
+    res.status(200).json({ message: `User ${user.name} has been blocked.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Unblock a user
+const unblockUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByIdAndUpdate(userId, { isBlocked: false }, { new: true });
+    if (!user) return res.status(404).json({ message: "User not found!" });
+
+    res.status(200).json({ message: `User ${user.name} has been unblocked.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { getAllUsers, sendEmailOTP, verifyEmailOTP, completeProfile, login, logout, getProfile, blockUser, unblockUser };
