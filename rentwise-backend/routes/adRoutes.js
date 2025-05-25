@@ -6,6 +6,7 @@ const adminAuthMiddleware = require("../middleware/adminAuth");
 const allowAdminOrOwner = require("../middleware/allowAdminOrOwner");
 
 const getEmailFromToken = require('../utils/jwt');
+const checkBlocked = require("../middleware/checkBlocked");
 
 // Routes
 router.get("/all", displayAds);

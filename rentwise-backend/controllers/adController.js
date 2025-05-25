@@ -16,14 +16,18 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
 const uploadMiddleware = upload.single("img");
 
 // Get all ads
 const displayAds = async (req, res) => {
   try {
-    const ads = await Ad.find();
+    const blockedUsers = await User.find({ isBlocked: true }).select('_id');
+    const blockedUserIds = blockedUsers.map(user => user._id);
+
+    const ads = await Ad.find({ userId: { $nin: blockedUserIds } });
+
     res.json(ads);
+
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
