@@ -35,7 +35,7 @@ const sendEmailOTP = async (req, res) => {
     otpStore.set(email, { otp, name, password }); // Temporarily store OTP & user data
 
     // Send OTP via email
-    await sendOtpToEmail(email, otp); // Replace with your email function
+    await sendOtpToEmail(email, otp);
 
     res.status(200).json({ message: "OTP sent to email. Verify to complete signup." });
   } catch (error) {
@@ -55,7 +55,6 @@ const verifyEmailOTP = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(storedData.password, 10);
 
-    // Create and save user in DB
     const newUser = new User({
       name: storedData.name,
       email,

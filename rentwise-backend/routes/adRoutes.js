@@ -6,14 +6,12 @@ const adminAuthMiddleware = require("../middleware/adminAuth");
 const allowAdminOrOwner = require("../middleware/allowAdminOrOwner");
 
 const getEmailFromToken = require('../utils/jwt');
-const checkBlocked = require("../middleware/checkBlocked");
 
 // Routes
 router.get("/all", displayAds);
 router.get("/:id", displayAd);
 router.get("/user/:userId", authMiddleware, getUserAds);
 router.post("/create", authMiddleware, uploadMiddleware, createAd);
-// router.delete("/delete/:adId", authMiddleware, allowAdminOrOwner, deleteAd);
 router.delete("/delete/:adId", (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) return res.status(401).json({ message: "No token provided." });
