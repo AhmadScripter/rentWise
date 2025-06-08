@@ -6,13 +6,18 @@ import { importProvidersFrom } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthInterceptor } from './app/interceptor/auth.interceptor';
 
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient( withInterceptors([AuthInterceptor])),
+    provideHttpClient(),
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true
+    // },
     provideRouter(routes),
     provideAnimations()
   ]

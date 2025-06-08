@@ -1,12 +1,23 @@
-<div class="container m-4" *ngIf="ad">
-  <div class="row">
-    <div class="col-md-6">
-      <img [src]="'http://localhost:3000' + ad.img" crossorigin="anonymous" class="img-fluid rounded"
-        alt="{{ ad.title }}">
+<div class="container my-4" *ngIf="ad">
+  <div class="row gy-4 justify-content-center">
+    <div class="col-12 col-md-6 text-center">
+      <div 
+        class="d-flex justify-content-center align-items-center border rounded shadow-sm" 
+        style="height: 400px; overflow: hidden; background-color: #f9f9f9;"
+      >
+        <img 
+          [src]="'http://localhost:3000' + ad.img"
+          crossOrigin="anonymous"
+          alt="{{ ad.title }}"
+          class="img-fluid"
+          style="max-height: 100%; max-width: 100%; object-fit: contain;"
+        />
+      </div>
     </div>
-    <div class="col-md-6">
-      <h2>{{ ad.title }}</h2>
-      <h4 class="text-success"><strong>{{ ad.price }}</strong></h4>
+
+    <div class="col-12 col-md-6">
+      <h2 class="fw-bold">{{ ad.title }}</h2>
+      <h4 class="text-success"><strong>{{ ad.price | currency: 'PKR' }}</strong></h4>
       <p><strong>Category:</strong> {{ ad.category }}</p>
       <p><strong>Location:</strong> {{ ad.location }}</p>
       <p><strong>Uploaded:</strong> {{ ad.uploadTime | date: 'dd-MM-YYYY, h:mm a' }}</p>
