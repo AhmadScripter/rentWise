@@ -12,7 +12,7 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.checkToken());
   isLoggedIn = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Check if token exists
   private checkToken(): boolean {
@@ -58,7 +58,7 @@ export class AuthService {
       }
     });
   }
-  
+
 
   // Register - sends OTP to email
   register(name: string, email: string, password: string, confirmPassword: string): Observable<any> {
@@ -104,17 +104,17 @@ export class AuthService {
   }
 
   // Block user by ID
-blockUser(userId: string): Observable<any> {
-  const token = localStorage.getItem('adminToken');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.put(`${this.baseUrl}/block/${userId}`, {}, { headers });
-}
+  blockUser(userId: string): Observable<any> {
+    const token = localStorage.getItem('adminToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.baseUrl}/block/${userId}`, {}, { headers });
+  }
 
-// Unblock user by ID
-unblockUser(userId: string): Observable<any> {
-  const token = localStorage.getItem('adminToken');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.put(`${this.baseUrl}/unblock/${userId}`, {}, { headers });
-}
+  // Unblock user by ID
+  unblockUser(userId: string): Observable<any> {
+    const token = localStorage.getItem('adminToken');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.baseUrl}/unblock/${userId}`, {}, { headers });
+  }
 
 }

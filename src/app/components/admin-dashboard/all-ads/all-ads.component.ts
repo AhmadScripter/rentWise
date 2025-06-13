@@ -40,6 +40,6 @@ export class AllAdsComponent implements OnInit {
         console.error('Failed to delete ad:', err);
       }
     });
-  }  
+  }
 
 }

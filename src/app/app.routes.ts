@@ -42,8 +42,9 @@ export const routes: Routes = [
         component: AdminDashboardComponent,
         canActivate: [adminGuard],
         children: [
+            { path: '', redirectTo: 'ads', pathMatch: 'full' },
             { path: 'ads', component: AllAdsComponent },
-            {path: 'users', component: AllUsersComponent},
+            { path: 'users', component: AllUsersComponent },
         ]
     },
 ];

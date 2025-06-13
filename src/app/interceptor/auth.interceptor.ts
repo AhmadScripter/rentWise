@@ -1,76 +1,52 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
+import { Observable, EMPTY } from 'rxjs';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  private router = inject(Router);
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let userToken = localStorage.getItem('authToken');
-    let adminToken = localStorage.getItem('adminToken');
-
-    console.log(userToken);
-
-    let clonedReq = req;
-
-    // Remove expired tokens
-    if (adminToken && this.isTokenExpired(adminToken)) {
-      localStorage.removeItem('adminToken');
-      adminToken = null;
-    }
-
-    if (userToken && this.isTokenExpired(userToken)) {
-      localStorage.removeItem('authToken');
-      userToken = null;
-    }
-
-    // Attach valid token
-    if (adminToken) {
-      clonedReq = req.clone({
-        setHeaders: { Authorization: `Bearer ${adminToken}` }
-      });
-    } else if (userToken) {
-      clonedReq = req.clone({
-        setHeaders: { Authorization: `Bearer ${userToken}` }
-      });
-    }
-
-    return next.handle(clonedReq).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if ([400, 401, 403].includes(error.status)) {
-          if (adminToken) {
-            localStorage.removeItem('adminToken');
-            this.router.navigate(['/admin-login']);
-          } else if (userToken) {
-            localStorage.removeItem('authToken');
-            this.router.navigate(['/login']);
-          } else {
-            this.router.navigate(['/login']);
-          }
-        }
-
-        return throwError(() => error);
-      })
-    );
+export const AuthInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<any>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<any>> => {
+  const authEndpoints = ['/login', '/admin-login', '/register', '/verify-email'];
+  if (authEndpoints.some(url => req.url.includes(url))) {
+    return next(req);
   }
 
-  private isTokenExpired(token: string): boolean {
+  console.log('Intercepting request:', req.url);
+
+  let userToken = localStorage.getItem('authToken');
+  let adminToken = localStorage.getItem('adminToken');
+
+  const now = Math.floor(Date.now() / 1000);
+
+  const isExpired = (token: string): boolean => {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const expiry = payload.exp;
-      const now = Math.floor(Date.now() / 1000);
-      return expiry < now;
-    } catch (e) {
-      return true; // Invalid token = treat as expired
+      return payload.exp < now;
+    } catch {
+      return true;
     }
+  };
+
+  if (adminToken && isExpired(adminToken)) {
+    console.warn('Admin token expired, redirecting...');
+    localStorage.removeItem('adminToken');
+    window.location.href = '/admin-login';
+    return EMPTY;
   }
-}
+
+  if (userToken && isExpired(userToken)) {
+    console.warn('User token expired, redirecting...');
+    localStorage.removeItem('authToken');
+    window.location.href = '/login';
+    return EMPTY;
+  }
+
+  let cloned = req;
+  if (adminToken) {
+    cloned = req.clone({ setHeaders: { Authorization: `Bearer ${adminToken}` } });
+  } else if (userToken) {
+    cloned = req.clone({ setHeaders: { Authorization: `Bearer ${userToken}` } });
+  }
+
+  return next(cloned);
+};

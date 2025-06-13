@@ -12,7 +12,7 @@ const adminLogin = async(req,res) =>{
     }
 
     const payload = {email};
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '3h'});
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1m'});
 
     res.json({token, message: "Login successful"});
 }
