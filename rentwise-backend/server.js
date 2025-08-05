@@ -5,6 +5,7 @@ const cors = require("cors");
 const adminAuthRoutes = require("./routes/adminAuth");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 const adRoutes = require("./routes/adRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const connectDB = require("./config/db");
@@ -29,6 +30,7 @@ app.use("/uploads", express.static("uploads"));
 app.use('/api/auth/adminLogin', adminAuthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/auth/profile", profileRoutes);
+app.use("/api/bookings", bookingRoutes)
 app.use("/api/ads", adRoutes);
 app.use('/api/contact', contactRoutes);
 

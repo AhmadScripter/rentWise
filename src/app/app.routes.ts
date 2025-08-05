@@ -18,6 +18,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { adminGuard } from './guards/admin.guard';
 import { AllAdsComponent } from './components/admin-dashboard/all-ads/all-ads.component';
 import { AllUsersComponent } from './components/admin-dashboard/all-users/all-users.component';
+import { MyBookingsComponent } from './components/my-bookings/my-bookings.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +28,7 @@ export const routes: Routes = [
     { path: 'verify-otp', component: VerifyOtpComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'my-ads', component: MyAdsComponent },
+    { path: 'my-bookings', component: MyBookingsComponent },
     { path: 'ad/:id', component: AdDetailsComponent },
     { path: 'category/:name', component: CategoryComponent },
     { path: 'blog', component: BlogComponent },

@@ -24,6 +24,44 @@
       <p><strong>Description:</strong> {{ ad.description }}</p>
       <p><strong>Owner Name:</strong> {{ ad.ownerName }}</p>
       <p><strong>Owner Contact:</strong> {{ ad.ownerPhone }}</p>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bookingModal">Book Now</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fw-bold" id="bookingModalLabel">Book "{{ ad?.title }}"</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form #bookingForm="ngForm">
+          <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" required [(ngModel)]="bookingData.startDate" name="startDate">
+          </div>
+
+          <div class="mb-3 col-md-6">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" required [(ngModel)]="bookingData.endDate" name="endDate">
+          </div>
+        </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message (Optional)</label>
+            <textarea class="form-control" id="message" rows="3" [(ngModel)]="bookingData.message" name="message"></textarea>
+          </div>
+
+          <button type="button" class="btn btn-primary w-100" (click)="submitBooking()" [disabled]="!bookingForm.form.valid">
+            Confirm Booking
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

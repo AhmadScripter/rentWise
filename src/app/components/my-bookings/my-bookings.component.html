@@ -1,0 +1,59 @@
+<div class="container py-5">
+  <h2 class="text-center mb-5 fw-bold text-primary display-5">My Bookings</h2>
+
+  <div *ngIf="bookings.length === 0" class="alert alert-info text-center fs-5">
+    You have no bookings yet.
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="bookings.length > 0">
+    <div *ngFor="let booking of bookings" class="col">
+      <div class="card border-0 rounded-4 shadow-sm h-100 overflow-hidden">
+        
+        <!-- Image -->
+        <div *ngIf="booking.adId">
+          <img [src]="'http://localhost:3000' + booking.adId.img"
+               alt="Item Image"
+               crossorigin="anonymous"
+               class="card-img-top img-fluid object-fit-cover"
+               style="height: 220px; object-fit: cover;" />
+        </div>
+
+        <!-- Body -->
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="card-title text-dark fw-semibold mb-0">
+              {{ booking.adId?.title || booking.itemName }}
+            </h5>
+
+            <!-- Status Badge -->
+            <span class="badge px-3 py-2 rounded-pill text-uppercase"
+                  [ngClass]="{
+                    'bg-warning text-dark': booking.status === 'pending',
+                    'bg-success': booking.status === 'confirmed',
+                    'bg-danger': booking.status === 'cancelled'
+                  }">
+              {{ booking.status }}
+            </span>
+          </div>
+
+          <!-- Booking Details -->
+          <p class="card-text text-muted small mb-0">
+            <strong>From:</strong> {{ booking.startDate | date: 'mediumDate' }}<br>
+            <strong>To:</strong> {{ booking.endDate | date: 'mediumDate' }}<br>
+            <strong>Owner Name:</strong> {{ booking.adId.ownerName }}<br>
+            <strong>Owner Phone:</strong> {{ booking.adId.ownerPhone }}
+          </p>
+        </div>
+
+        <!-- Cancel Button -->
+        <div class="card-footer border-0 bg-transparent p-3 pt-0">
+          <button *ngIf="booking.status === 'pending'"
+                  class="btn btn-outline-danger w-100 fw-semibold"
+                  (click)="cancelBooking(booking._id)">
+            Cancel Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
