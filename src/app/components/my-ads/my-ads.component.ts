@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
   templateUrl: './my-ads.component.html',
   styleUrl: './my-ads.component.css'
 })
-export class MyAdsComponent implements OnInit{
+export class MyAdsComponent implements OnInit {
   ads: any[] = [];
+  isExpanded: { [key: string]: boolean } = {};
   adForm: FormGroup;
   categories = ["Electronics", "Tools", "Furniture", "Vehicles", "Property", "Mobiles", "Home Appliances", "Bikes"];
   userId: string | null = localStorage.getItem("userId");
@@ -38,13 +39,17 @@ export class MyAdsComponent implements OnInit{
     if (!localStorage.getItem("userId")) {
       this.router.navigate(['/login']);
     }
-  
+
     this.fetchAds();
   }
 
 
   getTimeAgo(uploadTime: string): string {
     return formatDistanceToNow(new Date(uploadTime), { addSuffix: true });
+  }
+
+  toggleDescription(adId: string) {
+    this.isExpanded[adId] = !this.isExpanded[adId]
   }
 
   fetchAds(): void {
@@ -81,7 +86,7 @@ export class MyAdsComponent implements OnInit{
       setTimeout(() => this.errorMsg = '', 4000);
       return;
     }
-  
+
     this.isSubmitting = true;
 
     const formData = new FormData();
@@ -99,7 +104,7 @@ export class MyAdsComponent implements OnInit{
     this.adService.createAd(formData).subscribe({
       next: (res) => {
         this.successMsg = res.message || "Ad created successfully!";
-        setTimeout(()=>{this.successMsg=''}, 4000);
+        setTimeout(() => { this.successMsg = '' }, 4000);
         this.errorMsg = '';
         this.fetchAds();
         this.adForm.reset();

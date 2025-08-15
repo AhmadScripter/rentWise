@@ -1,30 +1,112 @@
-<div class="page-container mt-5">
-  <!-- Left Side: Listed Ads -->
-  <div class="ads-container">
-    <h2>My Ads</h2>
+<div class="page-container mb-3">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between flex-wrap">
+      <h2 class="fw-bold booking-text text-primary display-5">My Bookings</h2>
+      <p class="new-ad"><a data-bs-toggle="modal" data-bs-target="#addAdModal">Please click here to add new Ad</a></p>
+    </div>
 
-    <div *ngIf="ads.length; else noAds">
-      <div class="card mb-3" *ngFor="let ad of ads">
-        <div class="card-body">
-          <h5 class="card-title">{{ ad.title }}</h5>
-          <p class="card-text"><strong>Category:</strong> {{ ad.category }}</p>
-          <p class="card-text"><strong>Description:</strong> {{ ad.description }}</p>
-          <p class="card-text"><strong>Price:</strong> {{ ad.price }}</p>
-          <p class="card-text"><strong>Uploaded On:</strong> {{ getTimeAgo(ad.uploadTime) }}</p>
-          <img *ngIf="ad.img" [src]="'http://localhost:3000' + ad.img" crossOrigin="anonymous" alt="Ad Image" width="100">
-          <button class="btn btn-danger mt-2" (click)="deleteAd(ad._id)">Delete</button>
+    <!-- No Bookings -->
+    <div *ngIf="ads.length === 0" class="alert alert-info text-center fs-5">
+      You have no bookings yet.
+    </div>
+
+    <!-- Bookings List -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 ads-container" *ngIf="ads.length > 0">
+      <div *ngFor="let ad of ads" class="col">
+        <div class="card border-0 rounded-4 shadow-sm h-100 overflow-hidden">
+
+          <!-- Image -->
+          <div *ngIf="ad.img">
+            <img [src]="'http://localhost:3000' + ad.img" alt="Item Image" crossorigin="anonymous"
+              class="card-img-top img-fluid object-fit-cover" style="height: 220px; object-fit: cover;" />
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body pt-2 pb-0 mb-0">
+            <h5 class="card-title text-dark fw-semibold">{{ ad.title }}</h5>
+            <p class="card-text"><strong>Category:</strong> {{ ad.category }}</p>
+            <p class="card-text"><strong>Description:</strong>
+              {{ isExpanded[ad._id] ? ad.description : (ad.description | slice:0:150) + (ad.description.length > 150 ?
+              '...' : '') }}
+              <a *ngIf="ad.description.length > 100" href="javascript:void(0)" (click)="toggleDescription(ad._id)">
+                {{ isExpanded[ad._id] ? 'Read Less' : 'Read More' }}
+              </a>
+            </p>
+            <p class="card-text"><strong>Price:</strong> {{ ad.price | currency: 'PKR'}}</p>
+            <p class="card-text"><strong>Uploaded On:</strong> {{ getTimeAgo(ad.uploadTime) }}</p>
+
+            <!-- Delete Button -->
+            <button class="btn btn-danger mt-1" (click)="deleteAd(ad._id)">Delete</button>
+          </div>
+
         </div>
       </div>
     </div>
-
-    <!-- No Ads Message -->
-    <ng-template #noAds>
-      <p class="text-center">No ads found. Start by creating one below!</p>
-    </ng-template>
   </div>
+</div>
 
-  <!-- Right Side: Create New Ad -->
-  <div class="form-container">
+
+<div class="modal fade mt-3" id="addAdModal" tabindex="-1" aria-labelledby="addAdModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="addAdModalLabel">Create a New Ad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body with Form -->
+      <div class="modal-body">
+        <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
+        <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+        <form [formGroup]="adForm" (ngSubmit)="createAd()">
+          <div class="mb-3">
+            <label class="form-label" for="title">Title</label>
+            <input type="text" class="form-control" id="title" formControlName="title" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="category">Category</label>
+            <select class="form-control" formControlName="category" id="category" required>
+              <option value="" disabled selected>Select Category</option>
+              <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control" formControlName="description" id="description" required></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="price">Price /day</label>
+              <input type="number" class="form-control" formControlName="price" id="price" required />
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="location">Location</label>
+              <input type="text" class="form-control" formControlName="location" id="location" required />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="img">Upload Image</label>
+            <input type="file" class="form-control" formControlName="img" id="img" (change)="onFileSelect($event)" />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Posting Ad...' : 'Create Ad' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="form-container">
     <h4>Create a New Ad</h4>
     <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
     <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
@@ -66,5 +148,4 @@
 
       <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting">{{ isSubmitting ? 'Posting Ad...' : 'Create Ad' }}</button>
     </form>
-  </div>
-</div>
+</div> -->

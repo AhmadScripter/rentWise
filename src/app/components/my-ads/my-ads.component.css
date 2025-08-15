@@ -3,22 +3,70 @@
     justify-content: space-between;
     max-width: 99vw !important;
     gap: 20px;
-    padding: 40px;
     min-height: 100vh;
     width: 100vw;
     background: #f8f9fa;
     box-sizing: border-box;
 }
 
-.ads-container {
-    width: 48%;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 90vh;
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
 }
+
+.new-ad:hover{
+    color: #555;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ads-container p{
+    font-size: 12px;
+    text-align: justify;
+}
+
+.ads-container h5.card-title {
+    font-size: 20px;
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.ads-container .card {
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ads-container .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ads-container .card-text {
+    margin-bottom: 8px;
+    color: #6c757d;
+}
+
+.ads-container .card-text strong {
+    color: #495057;
+}
+
+.ads-container img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 15px;
+    border: 1px solid #eee;
+}
+
+/* ----------ads form----- */
 .form-container {
     width: 40%;
     background: #fff;
@@ -29,13 +77,6 @@
     top: 20px;
     height: fit-content;
 }
-.alert {
-    padding: 12px;
-    border-radius: 6px;
-    margin: 10px 0;
-    font-weight: bold;
-    text-align: center;
-}
 
 .alert.success {
     background-color: #d4edda;
@@ -45,59 +86,6 @@
 .alert.error {
     background-color: #f8d7da;
     color: #721c24;
-}
-h2, h4 {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #343a40;
-}
-
-h2 {
-    font-size: 28px;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 10px;
-}
-
-h4 {
-    font-size: 22px;
-}
-
-h5.card-title {
-    font-size: 20px;
-    color: #495057;
-    margin-bottom: 15px;
-}
-
-.card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    padding: 15px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-text {
-    margin-bottom: 8px;
-    color: #6c757d;
-}
-
-.card-text strong {
-    color: #495057;
-}
-
-img {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-top: 15px;
-    border: 1px solid #eee;
 }
 
 .form-label {
@@ -138,11 +126,9 @@ select.form-control {
 
 .btn {
     font-size: 16px;
-    padding: 10px;
+    padding: 5px 10px;
     border-radius: 5px;
-    cursor: pointer;
     transition: all 0.3s ease;
-    border: none;
     font-weight: 500;
 }
 
@@ -174,6 +160,24 @@ select.form-control {
     color: #6c757d;
     font-size: 18px;
     padding: 20px;
+}
+
+
+h2, h4 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+h2 {
+    font-size: 28px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+h4 {
+    font-size: 22px;
 }
 
 @media (max-width: 992px) {
@@ -221,5 +225,3 @@ input[type="file"]::file-selector-button {
 input[type="file"]::file-selector-button:hover {
     background-color: #dee2e6;
 }
-
-
