@@ -35,6 +35,16 @@
             <p class="card-text"><strong>Price:</strong> {{ ad.price | currency: 'PKR'}}</p>
             <p class="card-text"><strong>Uploaded On:</strong> {{ getTimeAgo(ad.uploadTime) }}</p>
 
+            <!-- Booking Info -->
+            <div class="p-2 border-top" *ngFor="let booking of getBookingsForAd(ad._id)">
+              <p><strong>Status:</strong> {{ booking.status }}</p>
+              <p><strong>User:</strong> {{ booking.userId }}</p>
+              <button *ngIf="booking.status==='pending'" class="btn btn-success btn-sm"
+                (click)="approveBooking(booking._id)">Approve</button>
+              <button *ngIf="booking.status==='pending'" class="btn btn-danger btn-sm"
+                (click)="cancelBooking(booking._id)">Cancel</button>
+            </div>
+
             <!-- Delete Button -->
             <button class="btn btn-danger mt-1" (click)="deleteAd(ad._id)">Delete</button>
           </div>
@@ -105,47 +115,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="form-container">
-    <h4>Create a New Ad</h4>
-    <div class="alert success" *ngIf="successMsg">{{ successMsg }}</div>
-    <div class="alert error" *ngIf="errorMsg">{{ errorMsg }}</div>
-    <form [formGroup]="adForm" (ngSubmit)="createAd()">
-      <div class="mb-3">
-        <label class="form-label" for="title">Title</label>
-        <input type="text" class="form-control" id="title" formControlName="title" required />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="category">Category</label>
-        <select class="form-control" formControlName="category" id="category" required>
-          <option value="" disabled selected>Select Category</option>
-          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="description">Description</label>
-        <textarea class="form-control" formControlName="description" id="description" required></textarea>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label" for="price">Price /day</label>
-          <input type="number" class="form-control" formControlName="price" id="price" required />
-        </div>
-    
-        <div class="col-md-6 mb-3">
-          <label class="form-label" for="location">Location</label>
-          <input type="text" class="form-control" formControlName="location" id="location" required />
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="img">Upload Image</label>
-        <input type="file" class="form-control" formControlName="img" id="img" (change)="onFileSelect($event)" />
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting">{{ isSubmitting ? 'Posting Ad...' : 'Create Ad' }}</button>
-    </form>
-</div> -->

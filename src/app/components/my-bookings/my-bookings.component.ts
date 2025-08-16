@@ -26,14 +26,20 @@ export class MyBookingsComponent implements OnInit {
       this.bookingService.getUserBookings(userId).subscribe({
         next: (res: any) => {
           console.log('Bookings received:', res);
-          this.bookings = res;
+        
+          this.bookings = [...res].sort((a, b) => {
+            const priority: Record<string, number> = { pending: 1, confirmed: 2, completed: 3, cancelled: 4 };
+            return (priority[a.status?.toLowerCase()] ?? 999) 
+                 - (priority[b.status?.toLowerCase()] ?? 999);
+          });
+          
         },
         error: err => console.log("Error fetching bookings")
       });
     } else {
       console.error('User ID not found in localStorage');
     }
-  }  
+  }
 
   statusClass(status: string): string {
     switch (status) {

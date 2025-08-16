@@ -10,6 +10,7 @@ const AdSchema = new mongoose.Schema({
   img: { type: String }, // Store image path
   uploadTime: { type: Date, default: Date.now },
 
+  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   ownerName: { type: String, required: true },
   ownerPhone: { type: String, required: true },
 });

@@ -6,6 +6,11 @@ const myBookingSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  ownerId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   adId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Ad',
@@ -35,5 +40,8 @@ const myBookingSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+myBookingSchema.index({ ownerId: 1, status: 1, startDate: 1 });
+myBookingSchema.index({ adId: 1, status: 1, startDate: 1, endDate: 1 });
 
 module.exports = mongoose.model('MyBooking', myBookingSchema);

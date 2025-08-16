@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { formatDistanceToNow } from 'date-fns';
 import { Router } from '@angular/router';
+import { BookingService } from '../../services/booking.service';
+import { Booking } from '../../models/booking.model';
 
 @Component({
   selector: 'app-my-ads',
@@ -14,6 +16,8 @@ import { Router } from '@angular/router';
 })
 export class MyAdsComponent implements OnInit {
   ads: any[] = [];
+  ownerBookings: Booking[] = []; 
+  ownerStats: any;
   isExpanded: { [key: string]: boolean } = {};
   adForm: FormGroup;
   categories = ["Electronics", "Tools", "Furniture", "Vehicles", "Property", "Mobiles", "Home Appliances", "Bikes"];
@@ -24,7 +28,7 @@ export class MyAdsComponent implements OnInit {
   isSubmitting = false;
   loading = false;
 
-  constructor(private adService: AdService, private fb: FormBuilder, private router: Router) {
+  constructor(private adService: AdService, private fb: FormBuilder, private router: Router, private bookingService: BookingService) {
     this.adForm = this.fb.group({
       title: ["", Validators.required],
       category: ["", Validators.required],
@@ -41,6 +45,8 @@ export class MyAdsComponent implements OnInit {
     }
 
     this.fetchAds();
+    this.fetchOwnerBookings();
+    this.fetchOwnerStats();
   }
 
 
@@ -67,6 +73,44 @@ export class MyAdsComponent implements OnInit {
     });
   }
 
+  fetchOwnerBookings(): void {
+    this.bookingService.getOwnerBookings(this.userId!).subscribe({
+      next: (data: Booking[]) => {
+        this.ownerBookings = data
+      },
+      error: (err) => {
+        console.error("Error fetching owner bookings:", err);
+      }
+    });
+  }
+  
+  getBookingsForAd(adId: string) {
+    return this.ownerBookings.filter(b => b.adId._id === adId);
+  }
+  
+  fetchOwnerStats(): void {
+    this.bookingService.getOwnerStats(this.userId!).subscribe({
+      next: (stats) => {
+        this.ownerStats = stats;
+      },
+      error: (err) => {
+        console.error("Error fetching stats:", err);
+      }
+    });
+  }
+  
+  approveBooking(bookingId: string) {
+    this.bookingService.approveBooking(bookingId).subscribe(() => {
+      this.fetchOwnerBookings();
+    });
+  }
+  
+  cancelBooking(bookingId: string) {
+    this.bookingService.cancelBooking(bookingId).subscribe(() => {
+      this.fetchOwnerBookings();
+    });
+  }
+  
   onFileSelect(event: any): void {
     const file = event.target.files[0];
     if (file) {
