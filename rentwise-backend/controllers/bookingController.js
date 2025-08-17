@@ -28,7 +28,7 @@ const createBooking = async (req, res) => {
     }
 
     // find any confirmed booking overlapping these dates
-    const overlapping = await Booking.findOne({
+    const overlapping = await MyBooking.findOne({
       adId: ad._id,
       status: 'confirmed',
       $or: [
@@ -40,7 +40,7 @@ const createBooking = async (req, res) => {
       return res.status(409).json({ message: 'Dates overlap an existing confirmed booking' });
     }
 
-    const booking = new Booking({
+    const booking = new MyBooking({
       userId,
       adId,
       ownerId: ad.ownerId,
@@ -53,7 +53,7 @@ const createBooking = async (req, res) => {
 
     const saved = await booking.save();
 
-    const populated = await Booking.findById(saved._id)
+    const populated = await MyBooking.findById(saved._id)
       .populate('adId', 'title img ownerName ownerPhone')
       .populate('userId', 'username email')
       .populate('ownerId', 'username email');

@@ -66,6 +66,12 @@
     border: 1px solid #eee;
 }
 
+.booking-details p{
+    margin: 2px !important;
+}
+.booking-details button{
+margin: 0 5px;
+}
 /* ----------ads form----- */
 .form-container {
     width: 40%;

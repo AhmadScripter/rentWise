@@ -16,8 +16,15 @@ import { Booking } from '../../models/booking.model';
 })
 export class MyAdsComponent implements OnInit {
   ads: any[] = [];
-  ownerBookings: Booking[] = []; 
+  ownerBookings: Booking[] = [];
   ownerStats: any;
+  statusPriority: Record<string, number> = {
+    confirmed: 1,
+    pending: 2,
+    cancelled: 3,
+    completed: 4,
+    none: 5
+  };
   isExpanded: { [key: string]: boolean } = {};
   adForm: FormGroup;
   categories = ["Electronics", "Tools", "Furniture", "Vehicles", "Property", "Mobiles", "Home Appliances", "Bikes"];
@@ -64,6 +71,7 @@ export class MyAdsComponent implements OnInit {
       next: (data) => {
         this.ads = data;
         this.loading = false;
+        this.trySortAds();
       },
       error: (err) => {
         this.errorMsg = 'Error fetching your ads.';
@@ -76,18 +84,37 @@ export class MyAdsComponent implements OnInit {
   fetchOwnerBookings(): void {
     this.bookingService.getOwnerBookings(this.userId!).subscribe({
       next: (data: Booking[]) => {
-        this.ownerBookings = data
+        this.ownerBookings = data;
+        this.trySortAds();
       },
       error: (err) => {
         console.error("Error fetching owner bookings:", err);
       }
     });
   }
-  
+
   getBookingsForAd(adId: string) {
     return this.ownerBookings.filter(b => b.adId._id === adId);
   }
-  
+
+
+  sortAdsByBookingStatus() {
+    this.ads = this.ads.sort((a, b) => {
+      const aBookings = this.ownerBookings.filter(bk => bk.adId._id === a._id);
+      const bBookings = this.ownerBookings.filter(bk => bk.adId._id === b._id);
+
+      const aStatus = aBookings.length > 0 ? aBookings[0].status.toLowerCase() : 'none';
+      const bStatus = bBookings.length > 0 ? bBookings[0].status.toLowerCase() : 'none';
+
+      return (this.statusPriority[aStatus] ?? 999) - (this.statusPriority[bStatus] ?? 999);
+    });
+  }
+  private trySortAds() {
+    if (this.ads.length && this.ownerBookings.length) {
+      this.sortAdsByBookingStatus();
+    }
+  }
+
   fetchOwnerStats(): void {
     this.bookingService.getOwnerStats(this.userId!).subscribe({
       next: (stats) => {
@@ -98,19 +125,19 @@ export class MyAdsComponent implements OnInit {
       }
     });
   }
-  
+
   approveBooking(bookingId: string) {
     this.bookingService.approveBooking(bookingId).subscribe(() => {
       this.fetchOwnerBookings();
     });
   }
-  
+
   cancelBooking(bookingId: string) {
     this.bookingService.cancelBooking(bookingId).subscribe(() => {
       this.fetchOwnerBookings();
     });
   }
-  
+
   onFileSelect(event: any): void {
     const file = event.target.files[0];
     if (file) {

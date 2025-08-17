@@ -36,17 +36,17 @@
             <p class="card-text"><strong>Uploaded On:</strong> {{ getTimeAgo(ad.uploadTime) }}</p>
 
             <!-- Booking Info -->
-            <div class="p-2 border-top" *ngFor="let booking of getBookingsForAd(ad._id)">
+            <div class="p-2 border-top booking-details" *ngFor="let booking of getBookingsForAd(ad._id)">
               <p><strong>Status:</strong> {{ booking.status }}</p>
-              <p><strong>User:</strong> {{ booking.userId }}</p>
-              <button *ngIf="booking.status==='pending'" class="btn btn-success btn-sm"
+              <p><strong>User:</strong> {{ booking.userId.email }}</p>
+              <button *ngIf="booking.status==='pending'" class="btn btn-success btn col-md-5"
                 (click)="approveBooking(booking._id)">Approve</button>
-              <button *ngIf="booking.status==='pending'" class="btn btn-danger btn-sm"
+              <button *ngIf="booking.status==='pending'" class="btn btn-danger btn col-md-5"
                 (click)="cancelBooking(booking._id)">Cancel</button>
             </div>
 
             <!-- Delete Button -->
-            <button class="btn btn-danger mt-1" (click)="deleteAd(ad._id)">Delete</button>
+            <button class="btn btn-danger mt-1 col-md-12" (click)="deleteAd(ad._id)">Delete</button>
           </div>
 
         </div>
