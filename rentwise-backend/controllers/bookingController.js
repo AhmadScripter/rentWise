@@ -1,5 +1,6 @@
 const MyBooking = require('../models/MyBooking');
 const Ad = require('../models/Ad');
+const Notification = require('../models/Notification');
 const mongoose = require('mongoose');
 
 // helper to detect date overlap
@@ -19,7 +20,6 @@ const createBooking = async (req, res) => {
     const ad = await Ad.findById(adId);
     if (!ad) return res.status(404).json({ message: 'Ad not found' });
 
-    // deny if dates overlap an existing confirmed booking for this ad
     const s = new Date(startDate);
     const e = new Date(endDate);
 
@@ -27,12 +27,12 @@ const createBooking = async (req, res) => {
       return res.status(400).json({ message: 'endDate must be after startDate' });
     }
 
-    // find any confirmed booking overlapping these dates
+    // deny overlapping confirmed bookings
     const overlapping = await MyBooking.findOne({
       adId: ad._id,
       status: 'confirmed',
       $or: [
-        { startDate: { $lte: e }, endDate: { $gte: s } } // classic overlap condition
+        { startDate: { $lte: e }, endDate: { $gte: s } }
       ]
     });
 
@@ -41,9 +41,9 @@ const createBooking = async (req, res) => {
     }
 
     const booking = new MyBooking({
-      userId,
+      userId,              // renter
       adId,
-      ownerId: ad.ownerId,
+      ownerId: ad.userId,
       startDate: s,
       endDate: e,
       message: message || '',
@@ -58,12 +58,30 @@ const createBooking = async (req, res) => {
       .populate('userId', 'username email')
       .populate('ownerId', 'username email');
 
-    res.status(201).json(populated);
+    // Notification for owner
+    const ownerNotification = new Notification({
+      userId: ad.userId._id,
+      message: `New booking request for your item (${ad.title}).`
+    });
+    await ownerNotification.save();
+
+    // Notification for renter
+    const renterNotification = new Notification({
+      userId: booking.userId,
+      message: `You booked "${ad.title}" from ${startDate} to ${endDate}.`
+    });
+    await renterNotification.save();
+
+    res.status(201).json({
+      booking: populated,
+      notifications: [ownerNotification, renterNotification]
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Failed to create booking', error: err });
   }
 };
+
 
 // Get all bookings
 const getAllBookings = async (req, res) => {

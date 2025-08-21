@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const adRoutes = require("./routes/adRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const connectDB = require("./config/db");
 const helmet = require('helmet')
@@ -32,6 +33,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth/profile", profileRoutes);
 app.use("/api/bookings", bookingRoutes)
 app.use("/api/ads", adRoutes);
+app.use("/api/notifications", notificationRoutes);
 app.use('/api/contact', contactRoutes);
 
 const PORT = process.env.PORT || 3000;
